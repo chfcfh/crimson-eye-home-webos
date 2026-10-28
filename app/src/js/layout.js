@@ -1,0 +1,145 @@
+/* ---------- layout ---------- */
+function rebuild() {
+  var by = {};
+  apps.forEach(function (a) {
+    by[a.id] = a;
+  });
+  var di = dockIds(),
+    dock = di.map(function (i) {
+      return by[i];
+    });
+  var rest = apps
+    .filter(function (a) {
+      return !isHidden(a.id) && di.indexOf(a.id) < 0;
+    })
+    .sort(byOrder);
+  var oldE = rows[r] && rows[r][c],
+    keep = oldE && oldE._a ? oldE._a.id : null;
+  if (oldE) oldE.classList.remove('f');
+  var dk = $('dock'),
+    gd = $('grid'),
+    bar = $('bar');
+  dk.textContent = '';
+  gd.textContent = '';
+  bar.textContent = '';
+  var d = dock.map(function (a) {
+    var t = tile(a);
+    dk.appendChild(t);
+    fit(t, true);
+    return t;
+  });
+  var g = rest.map(function (a) {
+    var t = tile(a);
+    gd.appendChild(t);
+    fit(t, false);
+    return t;
+  });
+  var tb = shownBar()
+    .concat([{ label: 'Customise', icon: 'edit', action: 'customize', fixed: true }])
+    .map(function (o) {
+      var p = document.createElement('div');
+      p.className = 'pill';
+      p._o = o;
+      p.innerHTML = svg(o.icon) + '<span></span>';
+      p.lastChild.textContent = barLabel(o);
+      hit(p);
+      bar.appendChild(p);
+      return p;
+    });
+  /* cards come first, so the ones OK can switch (a Home Assistant light) join the top row */
+  drawCards();
+  var top = tb.concat(cardTargets());
+  placeShelf(d.length);
+  rows = [top, d.length ? d : top];
+  for (var i = 0; i < g.length; i += TH.cols) rows.push(g.slice(i, i + TH.cols));
+  var nr = Math.min(r, rows.length - 1),
+    nc = c;
+  if (keep && tiles[keep]) {
+    var p = posOf(tiles[keep]);
+    if (p) {
+      nr = p[0];
+      nc = p[1];
+    }
+  }
+  setFocus(nr, nc, true);
+  markRunning();
+}
+
+/* the apps that are open get a green dot; read each time Home is shown, kept only in memory */
+var running = {};
+function markRunning() {
+  var on = cfg.runDots === true;
+  for (var id in tiles) {
+    var d = tiles[id],
+      dot = d.querySelector('.rd');
+    if (on && running[id] && !dot) {
+      dot = document.createElement('i');
+      dot.className = 'rd';
+      d.appendChild(dot);
+    } else if ((!on || !running[id]) && dot) dot.remove();
+  }
+}
+function readRunning() {
+  api('/api/running').then(
+    function (x) {
+      running = {};
+      (x.apps || []).forEach(function (a) {
+        running[a.id] = true;
+      });
+      markRunning();
+    },
+    function () {}
+  );
+}
+function load() {
+  readRunning();
+  api('/api/apps')
+    .then(function (x) {
+      if (x.version && oldSvc(x.version) && !warned) {
+        warned = true;
+        toast('The service (' + x.version + ') is older than this launcher needs: update it in the CleanYourTV manager');
+      }
+      usage = x.usage || {};
+      var rank = Object.keys(usage).sort(function (a, b) {
+        return usage[b] - usage[a];
+      });
+      var sig = JSON.stringify([
+        x.apps.map(function (a) {
+          return a.input ? [a.id, a.title, a.off] : [a.id, !!a.removable];
+        }),
+        x.config,
+        rank,
+      ]);
+      if (sig === lastSig) return;
+      lastSig = sig;
+      apps = x.apps.map(function (a) {
+        return a.input
+          ? { id: a.id, title: a.title, input: a.input, off: !!a.off }
+          : { id: a.id, title: a.title, removable: !!a.removable };
+      });
+      cfg = x.config || {};
+      useLang(cfg.lang);
+      applyTheme(cfg.theme);
+      if (liveOn()) apps.push({ id: '__live', title: t('Live TV') });
+      store();
+      rebuild();
+      WALL.sync();
+      if (!perfReady) {
+        perfReady = true;
+        perfMark('launcher ready ' + Math.round(performance.now()));
+      }
+    })
+    .catch(function () {
+      toast(t('Helper not reachable, retrying...'));
+      setTimeout(load, 3000);
+    });
+}
+
+var refreshT = 0,
+  refreshT2 = 0;
+function refreshSoon() {
+  clearTimeout(refreshT);
+  clearTimeout(refreshT2);
+  refreshT = setTimeout(load, 1800);
+  refreshT2 = setTimeout(load, 4500);
+}

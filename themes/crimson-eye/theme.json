@@ -1,0 +1,78 @@
+{
+  "name": "Crimson Eye",
+  "author": "Personal",
+  "description": "A cinematic crimson launcher with a low app dock and a moving focus emblem.",
+  "extends": "horizon",
+  "colors": {
+    "night": "#080205",
+    "panel": "#21080d",
+    "ink": "#ffffff",
+    "accent": "#ff263e",
+    "focus": "#ff3148",
+    "pill": "#ffffff"
+  },
+  "surface": {
+    "pillAlpha": 0.12,
+    "pillRing": 0.16,
+    "pillRadius": 24,
+    "menuAlpha": 0.94,
+    "rowRadius": 22
+  },
+  "clock": {
+    "layout": "inline",
+    "align": "left",
+    "x": 90,
+    "y": 58,
+    "scale": 0.95,
+    "dateScale": 0.8
+  },
+  "bar": {
+    "show": false,
+    "style": "round",
+    "labels": "hide",
+    "size": 58,
+    "gap": 14
+  },
+  "shelf": {
+    "show": false
+  },
+  "dock": {
+    "anchor": "bottom",
+    "align": "center",
+    "y": 110,
+    "count": 7,
+    "w": 148,
+    "h": 148,
+    "gap": 54,
+    "radius": 10,
+    "lift": 6,
+    "focusScale": 1.2,
+    "panel": 0,
+    "tileAlpha": 0
+  },
+  "grid": {
+    "mode": "push",
+    "dockUp": 205,
+    "clipTop": 180,
+    "cols": 8,
+    "tileH": 138,
+    "gapX": 24,
+    "gapY": 26,
+    "radius": 10,
+    "align": "center",
+    "focusScale": 1.13
+  },
+  "tile": {
+    "gloss": 0,
+    "border": 0,
+    "ringWidth": 0,
+    "ringOffset": 0
+  },
+  "effects": {
+    "glow": 0.75,
+    "glowColor": "accent",
+    "speed": 0.85,
+    "wallpaper": "crimson.jpg",
+    "wallpaperDim": 0.16
+  }
+}

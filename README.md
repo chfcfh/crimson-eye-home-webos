@@ -1,7 +1,7 @@
 <p align="center">
-  <a href="https://github.com/lasharor/cleanyourtv-WebOS/stargazers"><img src="https://img.shields.io/github/stars/lasharor/cleanyourtv-WebOS?style=flat&cacheSeconds=1800&color=ffc857&labelColor=101218" alt="Stars"></a>
-  <a href="https://github.com/lasharor/cleanyourtv-WebOS/pulls?q=is%3Amerged"><img src="https://img.shields.io/github/issues-search?query=repo%3Alasharor%2Fcleanyourtv-WebOS%20is%3Apr%20is%3Amerged&style=flat&cacheSeconds=1800&color=7c6cff&labelColor=101218&label=merged%20PRs" alt="Merged PRs"></a>
-  <a href="https://github.com/lasharor/cleanyourtv-WebOS/network/members"><img src="https://img.shields.io/github/forks/lasharor/cleanyourtv-WebOS?style=flat&cacheSeconds=1800&color=2fd3c0&labelColor=101218" alt="Forks"></a>
+  <a href="https://github.com/chfcfh/crimson-eye-home-webos/stargazers"><img src="https://img.shields.io/github/stars/chfcfh/crimson-eye-home-webos?style=flat&cacheSeconds=1800&color=ffc857&labelColor=101218" alt="Stars"></a>
+  <a href="https://github.com/chfcfh/crimson-eye-home-webos/pulls?q=is%3Amerged"><img src="https://img.shields.io/github/issues-search?query=repo%3Alasharor%2Fcleanyourtv-WebOS%20is%3Apr%20is%3Amerged&style=flat&cacheSeconds=1800&color=7c6cff&labelColor=101218&label=merged%20PRs" alt="Merged PRs"></a>
+  <a href="https://github.com/chfcfh/crimson-eye-home-webos/network/members"><img src="https://img.shields.io/github/forks/chfcfh/crimson-eye-home-webos?style=flat&cacheSeconds=1800&color=2fd3c0&labelColor=101218" alt="Forks"></a>
   <a href="https://discord.gg/9hHAmCfqB"><img src="https://img.shields.io/badge/Discord-join-f5f6f8?style=flat&logo=discord&logoColor=white&labelColor=101218" alt="Discord"></a>
 </p>
 
@@ -47,14 +47,14 @@ sets up, updates and removes everything.
    - **From the Homebrew Channel.** Open the Homebrew Channel, the gear at the top, **Add repository**, and enter
 
      ```text
-     https://github.com/lasharor/cleanyourtv-WebOS/releases/latest/download/apps.json
+     https://github.com/chfcfh/crimson-eye-home-webos/releases/latest/download/apps.json
      ```
 
      **CleanYourTV** then shows in the channel's list: open it and choose **Install**. New releases show there as updates.
    - **From your computer**, with your TV's IP address:
 
      ```sh
-     ssh root@192.168.1.50 'curl -fsSL https://raw.githubusercontent.com/lasharor/cleanyourtv-WebOS/main/install.sh | sh'
+     ssh root@192.168.1.50 'curl -fsSL https://raw.githubusercontent.com/chfcfh/crimson-eye-home-webos/main/install.sh | sh'
      ```
 
 3. On the TV, open **CleanYourTV**, choose the options and **Set up now**. It takes about a minute and the screen blinks once.
@@ -154,7 +154,7 @@ covers the ports, the token for notifications, voice and dev builds. To report a
 ## Community
 
 Questions, ideas and showing off your home screen: join the [CleanYourTV Discord](https://discord.gg/9hHAmCfqB). Bugs and reports of TVs
-that work go in the [issues](https://github.com/lasharor/cleanyourtv-WebOS/issues), so they stay findable.
+that work go in the [issues](https://github.com/chfcfh/crimson-eye-home-webos/issues), so they stay findable.
 
 ---
 
@@ -165,7 +165,7 @@ Troubleshooting and fixing with an AI assistant (Claude, ChatGPT, a local model)
 [documentation](https://lasharor.github.io/cleanyourtv-WebOS/ai/) has the prompts and the rules.
 
 Translations are welcome too: a language is one file in [`i18n/`](i18n/), no programming needed
-([how](https://lasharor.github.io/cleanyourtv-WebOS/languages/)). Reports from other TVs are the most useful contribution: open an [issue](https://github.com/lasharor/cleanyourtv-WebOS/issues)
+([how](https://lasharor.github.io/cleanyourtv-WebOS/languages/)). Reports from other TVs are the most useful contribution: open an [issue](https://github.com/chfcfh/crimson-eye-home-webos/issues)
 with the output of **Share log** in the manager app. For code, see [Contributing](https://lasharor.github.io/cleanyourtv-WebOS/development/):
 the service runs on Node.js 8 (webOS 5), `sh tools/check.sh` runs every check, every push to `dev` publishes a dev build, and a release goes out daily from `dev`.
 
@@ -182,4 +182,3 @@ and use it at your own risk. Live TV plays only the playlists you add.
 MIT. See `LICENSE`. The package also contains third-party files, listed with their licences in
 [`THIRD-PARTY.md`](THIRD-PARTY.md) and in [Credits and licences](https://lasharor.github.io/cleanyourtv-WebOS/credits/). The home-screen
 design follows the Android TV project [CleanYourTV](https://github.com/Gathin23/cleanyourtv) (MIT); no code from it is used.
-
